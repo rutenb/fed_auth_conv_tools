@@ -20,7 +20,9 @@ updated_master_list_df=my_requests.join(master_list_df[["Status","Notes"]],how="
 if "AR-02566" in updated_master_list_df.index:
     updated_master_list_df=updated_master_list_df.drop(index="AR-02566")
 
+#sort df by Status, record type, and created date
+updated_sorted_master_list_df=updated_master_list_df.sort_values(by=['Status','Record Type','Created Date'])
 #print to check, also shows up in the bat file output
-print(updated_master_list_df)
+print(updated_sorted_master_list_df)
 #save to csv, overwites existing master sheet
-updated_master_list_df.to_csv(master_list_path)
+updated_sorted_master_list_df.to_csv(master_list_path)
