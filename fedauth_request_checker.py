@@ -20,9 +20,18 @@ updated_master_list_df=my_requests.join(master_list_df[["Status","Notes"]],how="
 if "AR-02566" in updated_master_list_df.index:
     updated_master_list_df=updated_master_list_df.drop(index="AR-02566")
 
+#Drop Approval Stage col, no longer used. All are pending analytics....
+updated_master_list_df=updated_master_list_df.drop(columns="Approval Stage")
+
+#Convert dtypes to strings and created date to datetime
+updated_master_list_df=updated_master_list_df.astype(pd.StringDtype())
+updated_master_list_df["Created Date"]=pd.to_datetime(updated_master_list_df["Created Date"])
+
 #sort df by Status, record type, and created date
 updated_sorted_master_list_df=updated_master_list_df.sort_values(by=['Status','Record Type','Created Date'])
+
 #print to check, also shows up in the bat file output
 print(updated_sorted_master_list_df)
+
 #save to csv, overwites existing master sheet
 updated_sorted_master_list_df.to_csv(master_list_path)
